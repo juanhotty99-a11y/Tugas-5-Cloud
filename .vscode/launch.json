@@ -1,0 +1,59 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Soal 1: Logical Clock",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/soal1_logical_clock.py",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Soal 2d: Node B (penerima)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/node_b_penerima.py",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Soal 2d: Node A (pengirim)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/node_a_pengirim.py",
+            "args": ["", "${input:pesan}"],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Soal 2d: Node A (masukkan hash manual)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/node_a_pengirim.py",
+            "args": ["${input:hashNodeB}", "${input:pesan}"],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Soal 2d: Node B + Node A",
+            "configurations": ["Soal 2d: Node B (penerima)", "Soal 2d: Node A (pengirim)"],
+            "stopAll": true
+        }
+    ],
+    "inputs": [
+        {
+            "id": "hashNodeB",
+            "type": "promptString",
+            "description": "Hash tujuan Node B (32 karakter heksadesimal)"
+        },
+        {
+            "id": "pesan",
+            "type": "promptString",
+            "description": "Isi pesan yang dikirim Node A",
+            "default": "Halo dari Node A!"
+        }
+    ]
+}

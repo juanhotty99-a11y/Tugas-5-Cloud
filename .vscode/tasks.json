@@ -1,0 +1,15 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Setup: buat .venv dan install requirements",
+            "type": "shell",
+            "command": "python3 -m venv .venv && .venv/bin/pip install -r requirements.txt",
+            "windows": {
+                "command": "python -m venv .venv; .venv\\Scripts\\pip install -r requirements.txt"
+            },
+            "options": { "cwd": "${workspaceFolder}" },
+            "problemMatcher": []
+        }
+    ]
+}

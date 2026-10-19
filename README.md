@@ -13,13 +13,45 @@ Dokumen asli (PDF): [`docs/Tugas-5_Koordinasi_pada_Sistem_Terdistribusi.pdf`](do
 .
 ├── README.md                     # Soal dan jawaban Tugas 5
 ├── requirements.txt              # Dependensi program (rns)
+├── .vscode/                      # Konfigurasi Run/Debug VS Code
 ├── docs/
 │   ├── Tugas-5_Koordinasi_pada_Sistem_Terdistribusi.pdf
 │   └── images/                   # Diagram soal nomor 1
 └── src/
-    ├── node_a_pengirim.py        # Node A: mengirim pesan
-    └── node_b_penerima.py        # Node B: announce & menerima pesan
+    ├── soal1_logical_clock.py    # Soal 1: Lamport & vector clock
+    ├── node_a_pengirim.py        # Soal 2d - Node A: mengirim pesan
+    └── node_b_penerima.py        # Soal 2d - Node B: announce & menerima pesan
 ```
+
+## Menjalankan di VS Code
+
+**Persiapan (sekali saja):**
+
+1. Install [Python 3.8+](https://www.python.org/downloads/) dan [VS Code](https://code.visualstudio.com/).
+2. Clone repository ini, lalu buka foldernya di VS Code (**File → Open Folder...**).
+3. Install extension yang direkomendasikan (**Python** dan **Python Debugger**). VS Code akan menawarkannya otomatis.
+4. Buat virtual environment dan install dependensi: **Terminal → Run Task... → Setup: buat .venv dan install requirements**.
+   Atau lewat terminal:
+   ```bash
+   python -m venv .venv
+   # Windows:
+   .venv\Scripts\pip install -r requirements.txt
+   # macOS / Linux:
+   .venv/bin/pip install -r requirements.txt
+   ```
+5. Pastikan interpreter yang dipakai adalah `.venv` (**Ctrl+Shift+P → Python: Select Interpreter**).
+
+**Menjalankan program:** buka panel **Run and Debug** (Ctrl+Shift+D), pilih konfigurasi, lalu tekan **F5**.
+
+| Konfigurasi | Keterangan |
+|-------------|------------|
+| `Soal 1: Logical Clock` | Menghitung dan menampilkan langkah Lamport timestamp, vector clock, dan hubungan event c–g |
+| `Soal 2d: Node B + Node A` | Menjalankan Node B dan Node A sekaligus. Node A otomatis membaca hash Node B, lalu mengirim pesan |
+| `Soal 2d: Node B (penerima)` | Hanya menjalankan Node B. Hentikan dengan tombol Stop atau Ctrl+C |
+| `Soal 2d: Node A (pengirim)` | Mengirim pesan ke Node B yang sedang berjalan di komputer yang sama |
+| `Soal 2d: Node A (masukkan hash manual)` | Mengirim ke Node B di komputer lain (satu LAN). Isi hash yang ditampilkan Node B |
+
+Saat pertama kali dijalankan, Reticulum otomatis membuat file konfigurasi di `~/.reticulum/config`. Hash Node B disimpan di `data/node_b_hash.txt` dan identity-nya di `data/node_b_identity`, sehingga hash Node B tetap sama setiap kali dijalankan ulang.
 
 ## Ketentuan
 
@@ -211,13 +243,16 @@ Program terdiri dari dua bagian:
 
 Jalankan Node B terlebih dahulu, salin hash tujuan yang tampil, lalu jalankan Node A dengan hash tersebut. Kedua node dapat dijalankan pada dua komputer dalam satu LAN (AutoInterface aktif secara default di `~/.reticulum/config`) atau pada satu komputer.
 
-**Cara menjalankan:**
+**Cara menjalankan:** di VS Code, pilih konfigurasi `Soal 2d: Node B + Node A` lalu tekan F5 (lihat [Menjalankan di VS Code](#menjalankan-di-vs-code)). Bisa juga lewat dua terminal:
 
 ```bash
 pip install -r requirements.txt     # atau: pip install rns
-python src/node_b_penerima.py
-python src/node_a_pengirim.py <hash_tujuan_node_B> "Halo dari Node A!"
+python src/node_b_penerima.py                                          # terminal 1
+python src/node_a_pengirim.py                                          # terminal 2, hash dibaca otomatis
+python src/node_a_pengirim.py <hash_tujuan_node_B> "Halo dari Node A!" # atau hash manual
 ```
+
+Untuk soal 1, perhitungannya bisa dicek dengan `python src/soal1_logical_clock.py`.
 
 **Hasil eksekusi program (simulasi tampilan terminal):**
 
